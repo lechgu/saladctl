@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"lechgu/saladctl/internal/config"
 	"lechgu/saladctl/internal/dto"
 	"net/http"
@@ -59,4 +60,40 @@ func (s *Session) login() error {
 	}
 	defer res.Body.Close()
 	return nil
+}
+
+func GetOne[T any](session *Session, url string) (T, error) {
+	var instance T
+	res, err := session.Client.Get(url)
+	if err != nil {
+		return instance, err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		return instance, errors.New(res.Status)
+	}
+	payload, err := io.ReadAll(res.Body)
+	if err != nil {
+		return instance, err
+	}
+	err = json.Unmarshal(payload, &instance)
+	return instance, err
+}
+
+func GetMany[T any](session *Session, url string) ([]T, error) {
+	coll := []T{}
+	res, err := session.Client.Get(url)
+	if err != nil {
+		return coll, err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		return coll, errors.New(res.Status)
+	}
+	payload, err := io.ReadAll(res.Body)
+	if err != nil {
+		return coll, err
+	}
+	err = json.Unmarshal(payload, &coll)
+	return coll, err
 }

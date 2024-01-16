@@ -50,19 +50,13 @@ func (s *Session) login() error {
 	if err != nil {
 		return err
 	}
-	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(payload))
+	res, err := s.Client.Post(url, "application/json", bytes.NewReader(payload))
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := s.Client.Do(req)
-	if err != nil {
-		return err
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		return errors.New(res.Status)
 	}
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return errors.New(resp.Status)
-	}
-	fmt.Println(resp.StatusCode)
-	defer resp.Body.Close()
+	defer res.Body.Close()
 	return nil
 }

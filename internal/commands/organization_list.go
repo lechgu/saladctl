@@ -27,13 +27,11 @@ func listOrganizations(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	tbl := table.New("Id", "Name", "Display name", "Created", "Updated")
+	tbl := table.New("Id", "Name", "Created")
 	lo.ForEach(orgs, func(org dto.Organization, _ int) {
 		tbl.AddRow(org.ID,
 			org.Name,
-			org.DisplayName,
 			humanize.Time(org.CreateTime),
-			humanize.Time(org.UpdateTime),
 		)
 	})
 	tbl.Print()

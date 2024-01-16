@@ -27,13 +27,11 @@ func listProjects(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	tbl := table.New("Id", "Name", "Display name", "Created", "Updated")
+	tbl := table.New("Id", "Name", "Created")
 	lo.ForEach(projects, func(project dto.Project, _ int) {
 		tbl.AddRow(project.ID,
 			project.Name,
-			project.DisplayName,
 			humanize.Time(project.CreateTime),
-			humanize.Time(project.UpdateTime),
 		)
 	})
 	tbl.Print()

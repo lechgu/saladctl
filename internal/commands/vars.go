@@ -1,6 +1,7 @@
 package commands
 
 var (
-	organizationName string
-	projectName      string
+	organizationName   string
+	projectName        string
+	containerGroupName string
 )

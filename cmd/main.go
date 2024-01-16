@@ -5,6 +5,7 @@ import (
 	"lechgu/saladctl/internal/config"
 	"lechgu/saladctl/internal/di"
 	"lechgu/saladctl/internal/organizations"
+	"lechgu/saladctl/internal/projects"
 	"lechgu/saladctl/internal/sessions"
 
 	"github.com/samber/do"
@@ -17,5 +18,6 @@ func main() {
 	do.Provide(di.Injector, config.New)
 	do.Provide(di.Injector, sessions.New)
 	do.Provide(di.Injector, organizations.NewController)
+	do.Provide(di.Injector, projects.NewController)
 	commands.Execute()
 }

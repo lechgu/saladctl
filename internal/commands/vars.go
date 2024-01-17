@@ -21,7 +21,7 @@ func requireProject(cmd *cobra.Command) {
 
 func requireContainerGroup(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&containerGroupName, "container-group", "c", "", "Container group name")
-	_ = cmd.MarkFlagRequired("organization")
+	_ = cmd.MarkFlagRequired("container-group")
 }
 
 func requireQueue(cmd *cobra.Command) {

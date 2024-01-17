@@ -45,4 +45,5 @@ func listContainerGroups(cmd *cobra.Command, args []string) error {
 func init() {
 	requireOrganization(containerGroupListCmd)
 	requireProject(containerGroupListCmd)
+	containerGroupCmd.AddCommand(containerGroupListCmd)
 }

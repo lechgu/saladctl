@@ -38,9 +38,7 @@ func ListQueues(cmd *cobra.Command, args []string) error {
 }
 
 func init() {
-	queueListCmd.Flags().StringVarP(&organizationName, "organization", "o", "", "Organization name")
-	_ = queueListCmd.MarkFlagRequired("organization")
-	queueListCmd.Flags().StringVarP(&projectName, "project", "p", "", "Project name")
-	_ = queueListCmd.MarkFlagRequired("project")
+	requireOrganization(queueListCmd)
+	requireProject(queueListCmd)
 	queueCmd.AddCommand(queueListCmd)
 }

@@ -17,10 +17,8 @@ var projectGetCmd = &cobra.Command{
 }
 
 func init() {
-	projectGetCmd.Flags().StringVarP(&organizationName, "organization", "o", "", "Organization name")
-	_ = projectCmd.MarkFlagRequired("organization")
-	projectGetCmd.Flags().StringVarP(&projectName, "project", "p", "", "Project name")
-	_ = projectGetCmd.MarkFlagRequired("project")
+	requireOrganization(projectGetCmd)
+	requireProject(projectGetCmd)
 	projectCmd.AddCommand(projectGetCmd)
 }
 

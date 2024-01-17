@@ -35,11 +35,8 @@ func getQueue(cmd *cobra.Command, args []string) error {
 }
 
 func init() {
-	queueGetCmd.Flags().StringVarP(&organizationName, "organization", "o", "", "Organization name")
-	_ = queueGetCmd.MarkFlagRequired("organization")
-	queueGetCmd.Flags().StringVarP(&projectName, "project", "p", "", "Project name")
-	_ = queueGetCmd.MarkFlagRequired("project")
-	queueGetCmd.Flags().StringVarP(&queueName, "queue", "q", "", "Queue name")
-	_ = queueGetCmd.MarkFlagRequired("queue")
+	requireOrganization(queueGetCmd)
+	requireProject(queueGetCmd)
+	requireQueue(queueGetCmd)
 	queueCmd.AddCommand(queueGetCmd)
 }

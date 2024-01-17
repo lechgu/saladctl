@@ -39,7 +39,6 @@ func listProjects(cmd *cobra.Command, args []string) error {
 }
 
 func init() {
-	projectListCmd.Flags().StringVarP(&organizationName, "organization", "o", "", "Organization name")
-	_ = projectListCmd.MarkFlagRequired("organization")
+	requireOrganization(projectListCmd)
 	projectCmd.AddCommand(projectListCmd)
 }

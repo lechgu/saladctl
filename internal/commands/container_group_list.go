@@ -43,9 +43,6 @@ func listContainerGroups(cmd *cobra.Command, args []string) error {
 }
 
 func init() {
-	containerGroupListCmd.Flags().StringVarP(&organizationName, "organization", "o", "", "Organization name")
-	_ = containerGroupListCmd.MarkFlagRequired("organization")
-	containerGroupListCmd.Flags().StringVarP(&projectName, "project", "p", "", "Project name")
-	_ = containerGroupListCmd.MarkFlagRequired("project")
-	containerGroupCmd.AddCommand(containerGroupListCmd)
+	requireOrganization(containerGroupListCmd)
+	requireProject(containerGroupListCmd)
 }

@@ -17,8 +17,7 @@ var organizationGetCmd = &cobra.Command{
 }
 
 func init() {
-	organizationGetCmd.Flags().StringVarP(&organizationName, "organization", "o", "", "Organization name")
-	_ = organizationGetCmd.MarkFlagRequired("organization")
+	requireOrganization(organizationGetCmd)
 	organizationCmd.AddCommand(organizationGetCmd)
 }
 

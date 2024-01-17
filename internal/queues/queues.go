@@ -1,10 +1,7 @@
 package queues
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
 	"lechgu/saladctl/internal/config"
 	"lechgu/saladctl/internal/dto"
 	"lechgu/saladctl/internal/sessions"
@@ -33,43 +30,11 @@ func NewController(di *do.Injector) (*Controller, error) {
 }
 
 func (ctl *Controller) ListQueues(organization string, project string) ([]dto.Queue, error) {
-	queues := []dto.Queue{}
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues", ctl.cfg.BaseURL, organization, project)
-	res, err := ctl.session.Client.Get(url)
-	if err != nil {
-		return queues, err
-	}
-	defer res.Body.Close()
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return queues, errors.New(res.Status)
-	}
-	payload, err := io.ReadAll(res.Body)
-	if err != nil {
-		return queues, err
-	}
-	var queueList dto.QueueList
-	err = json.Unmarshal(payload, &queueList)
-	if err != nil {
-		return queues, err
-	}
-	return queueList.Items, nil
+	return sessions.GetMany[dto.Queue](ctl.session, url)
 }
 
-func (ctl *Controller) getQueue(organization string, project string, name string) (dto.Queue, error) {
-	var queue dto.Queue
+func (ctl *Controller) GetQueue(organization string, project string, name string) (dto.Queue, error) {
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues/%s", ctl.cfg.BaseURL, organization, project, name)
-	res, err := ctl.session.Client.Get(url)
-	if err != nil {
-		return queue, err
-	}
-	defer res.Body.Close()
-	if res.StatusCode <= 200 || res.StatusCode >= 300 {
-		return queue, errors.New(res.Status)
-	}
-	payload, err := io.ReadAll(res.Body)
-	if err != nil {
-		return queue, err
-	}
-	err = json.Unmarshal(payload, &queue)
-	return queue, err
+	return sessions.GetOne[dto.Queue](ctl.session, url)
 }

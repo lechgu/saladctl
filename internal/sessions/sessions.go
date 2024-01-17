@@ -80,20 +80,25 @@ func GetOne[T any](session *Session, url string) (T, error) {
 	return instance, err
 }
 
+type Collection[T any] struct {
+	Items []T `json:"items"`
+}
+
 func GetMany[T any](session *Session, url string) ([]T, error) {
-	coll := []T{}
+	var items []T
 	res, err := session.Client.Get(url)
 	if err != nil {
-		return coll, err
+		return items, err
 	}
 	defer res.Body.Close()
 	if res.StatusCode != http.StatusOK {
-		return coll, errors.New(res.Status)
+		return items, errors.New(res.Status)
 	}
 	payload, err := io.ReadAll(res.Body)
 	if err != nil {
-		return coll, err
+		return items, err
 	}
+	var coll Collection[T]
 	err = json.Unmarshal(payload, &coll)
-	return coll, err
+	return coll.Items, err
 }

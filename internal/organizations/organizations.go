@@ -1,14 +1,10 @@
 package organizations
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
 	"lechgu/saladctl/internal/config"
 	"lechgu/saladctl/internal/dto"
 	"lechgu/saladctl/internal/sessions"
-	"net/http"
 
 	"github.com/samber/do"
 )
@@ -34,43 +30,12 @@ func NewController(di *do.Injector) (*Controller, error) {
 }
 
 func (ctl *Controller) ListOrganizations() ([]dto.Organization, error) {
-	var orgs []dto.Organization
 	url := fmt.Sprintf("%s/organizations", ctl.cfg.BaseURL)
-	res, err := ctl.session.Client.Get(url)
-	if err != nil {
-		return orgs, err
-	}
-
-	defer res.Body.Close()
-	if res.StatusCode != http.StatusOK {
-		return orgs, errors.New(res.Status)
-	}
-	payload, err := io.ReadAll(res.Body)
-	if err != nil {
-		return orgs, err
-	}
-	var response dto.OrganizationList
-	if err = json.Unmarshal(payload, &response); err != nil {
-		return orgs, err
-	}
-	return response.Items, err
+	return sessions.GetMany[dto.Organization](ctl.session, url)
 }
 
 func (ctl *Controller) GetOrganization(name string) (dto.Organization, error) {
-	var org dto.Organization
+
 	url := fmt.Sprintf("%s/organizations/%s", ctl.cfg.BaseURL, name)
-	res, err := ctl.session.Client.Get(url)
-	if err != nil {
-		return org, err
-	}
-	defer res.Body.Close()
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return org, errors.New(res.Status)
-	}
-	payload, err := io.ReadAll(res.Body)
-	if err != nil {
-		return org, err
-	}
-	err = json.Unmarshal(payload, &org)
-	return org, err
+	return sessions.GetOne[dto.Organization](ctl.session, url)
 }

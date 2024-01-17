@@ -6,7 +6,7 @@ var queueCmd = &cobra.Command{
 	Use:   "queue",
 	Short: "Manage queues",
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+		_ = cmd.Help()
 	},
 }
 

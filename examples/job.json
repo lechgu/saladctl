@@ -1,0 +1,10 @@
+{
+    "width": 640,
+    "height": 480,
+    "iterations": 100,
+    "re_min": -2,
+    "re_max": 1,
+    "im_min": -1,
+    "im_max": 1,
+    "kind": "base64"
+}

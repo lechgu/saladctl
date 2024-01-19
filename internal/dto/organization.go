@@ -10,7 +10,3 @@ type Organization struct {
 	UpdateTime         time.Time `json:"update_time" yaml:"update_time"`
 	HasHadValidPayment bool      `json:"has_had_valid_payment" yaml:"has_had_valid_payment"`
 }
-
-type OrganizationList struct {
-	Items []Organization `json:"items"`
-}

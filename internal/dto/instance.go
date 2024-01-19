@@ -8,3 +8,7 @@ type Instance struct {
 	UpdateTime time.Time `json:"update_time" yaml:"update_time"`
 	Version    int       `json:"version" yaml:"version"`
 }
+
+type InstanceList struct {
+	Instances []Instance `json:"instances"`
+}

@@ -7,6 +7,7 @@ var (
 	projectName        string
 	containerGroupName string
 	queueName          string
+	jobID              string
 )
 
 func requireOrganization(cmd *cobra.Command) {
@@ -27,4 +28,9 @@ func requireContainerGroup(cmd *cobra.Command) {
 func requireQueue(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&queueName, "queue", "q", "", "Queue name")
 	_ = cmd.MarkFlagRequired("queue")
+}
+
+func requireJob(cmd *cobra.Command) {
+	cmd.Flags().StringVarP(&jobID, "job", "j", "", "Job id")
+	_ = cmd.MarkFlagRequired("job")
 }

@@ -34,10 +34,6 @@ func NewController(di *do.Injector) (*Controller, error) {
 	}, nil
 }
 
-type InstanceList struct {
-	Instances []dto.Instance `json:"instances"`
-}
-
 func (ctl *Controller) ListInstances(organization string, project string, containerGroup string) ([]dto.Instance, error) {
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/containers/%s/instances", ctl.cfg.BaseURL, organization, project, containerGroup)
 	var items []dto.Instance
@@ -53,7 +49,7 @@ func (ctl *Controller) ListInstances(organization string, project string, contai
 	if err != nil {
 		return items, err
 	}
-	var coll InstanceList
+	var coll dto.InstanceList
 	err = json.Unmarshal(payload, &coll)
 	return coll.Instances, err
 }

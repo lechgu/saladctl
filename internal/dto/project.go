@@ -10,7 +10,3 @@ type Project struct {
 	CreateTime  time.Time `json:"create_time" yaml:"create_time"`
 	UpdateTime  time.Time `json:"update_time" yaml:"update_time"`
 }
-
-type ProjectList struct {
-	Items []Project `json:"items"`
-}

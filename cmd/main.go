@@ -6,6 +6,7 @@ import (
 	"lechgu/saladctl/internal/containergroups"
 	"lechgu/saladctl/internal/di"
 	"lechgu/saladctl/internal/instances"
+	"lechgu/saladctl/internal/jobs"
 	"lechgu/saladctl/internal/organizations"
 	"lechgu/saladctl/internal/projects"
 	"lechgu/saladctl/internal/queues"
@@ -23,5 +24,6 @@ func main() {
 	do.Provide(di.Injector, containergroups.NewController)
 	do.Provide(di.Injector, queues.NewController)
 	do.Provide(di.Injector, instances.NewController)
+	do.Provide(di.Injector, jobs.NewController)
 	commands.Execute()
 }

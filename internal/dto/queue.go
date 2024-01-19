@@ -9,7 +9,3 @@ type Queue struct {
 	CreateTime  time.Time `json:"create_time" yaml:"create_time"`
 	UpdateTime  time.Time `json:"update_time" yaml:"update_time"`
 }
-
-type QueueList struct {
-	Items []Queue `json:"items"`
-}

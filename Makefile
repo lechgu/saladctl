@@ -12,7 +12,7 @@ lint:
 
 publish: clean
 	mkdir -p dist/darwin
-	GOOS=darwin go build -o dist/mac/saladctl cmd/main.go
+	GOOS=darwin go build -o dist/darwin/saladctl cmd/main.go
 	mkdir -p dist/linux
 	GOOS=linux go build -o dist/linux/saladctl cmd/main.go
 	mkdir -p dist/windows

@@ -69,3 +69,20 @@ func (ctl *Controller) GetJob(organization string, project string, queue string,
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues/%s/jobs/%s", ctl.cfg.BaseURL, organization, project, queue, job)
 	return sessions.GetOne[dto.Job](ctl.session, url)
 }
+
+func (ctl *Controller) DeleteJob(organization string, project string, queue string, job string) error {
+	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues/%s/jobs/%s", ctl.cfg.BaseURL, organization, project, queue, job)
+	req, err := http.NewRequest(http.MethodDelete, url, http.NoBody)
+	if err != nil {
+		return err
+	}
+	res, err := ctl.session.Client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusAccepted {
+		return errors.New(res.Status)
+	}
+	return nil
+}

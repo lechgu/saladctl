@@ -44,7 +44,7 @@ func (ctl *Controller) GetQueue(organization string, project string, name string
 	return sessions.GetOne[dto.Queue](ctl.session, url)
 }
 
-func (ctl *Controller) CreateQueue(organization string, project string, req dto.QueueCreateRequest) (dto.Queue, error) {
+func (ctl *Controller) CreateQueue(organization string, project string, req dto.CreateQueueRequest) (dto.Queue, error) {
 	var queue dto.Queue
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues", ctl.cfg.BaseURL, organization, project)
 	payload, err := json.Marshal(req)

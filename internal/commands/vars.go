@@ -8,6 +8,8 @@ var (
 	containerGroupName string
 	queueName          string
 	jobID              string
+	path               string
+	project            int
 )
 
 func requireOrganization(cmd *cobra.Command) {

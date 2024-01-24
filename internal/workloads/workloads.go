@@ -1,4 +1,4 @@
-package containergroups
+package workloads
 
 import (
 	"fmt"
@@ -29,12 +29,12 @@ func NewController(di *do.Injector) (*Controller, error) {
 	}, nil
 }
 
-func (ctl *Controller) ListContainerGroups(organization string, project string) ([]dto.ContainerGroup, error) {
+func (ctl *Controller) ListWorkloads(organization string, project string) ([]dto.ContainerGroup, error) {
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/containers", ctl.cfg.BaseURL, organization, project)
 	return sessions.GetMany[dto.ContainerGroup](ctl.session, url)
 }
 
-func (ctl *Controller) GetContainerGroup(organization string, project string, name string) (dto.ContainerGroup, error) {
+func (ctl *Controller) GetWorkload(organization string, project string, name string) (dto.ContainerGroup, error) {
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/containers/%s", ctl.cfg.BaseURL, organization, project, name)
 	return sessions.GetOne[dto.ContainerGroup](ctl.session, url)
 }

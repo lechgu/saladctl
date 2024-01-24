@@ -2,9 +2,9 @@ package commands
 
 import (
 	"fmt"
-	"lechgu/saladctl/internal/containergroups"
 	"lechgu/saladctl/internal/di"
 	"lechgu/saladctl/internal/dto"
+	"lechgu/saladctl/internal/workloads"
 
 	"github.com/dustin/go-humanize"
 	"github.com/rodaine/table"
@@ -13,18 +13,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var containerGroupListCmd = &cobra.Command{
+var workloadList = &cobra.Command{
 	Use:   "list",
-	Short: "List container groups",
-	RunE:  listContainerGroups,
+	Short: "List workloads",
+	RunE:  listWorkloads,
 }
 
-func listContainerGroups(cmd *cobra.Command, args []string) error {
-	ctl, err := do.Invoke[*containergroups.Controller](di.Injector)
+func listWorkloads(cmd *cobra.Command, args []string) error {
+	ctl, err := do.Invoke[*workloads.Controller](di.Injector)
 	if err != nil {
 		return err
 	}
-	containerGroups, err := ctl.ListContainerGroups(organizationName, projectName)
+	containerGroups, err := ctl.ListWorkloads(organizationName, projectName)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func listContainerGroups(cmd *cobra.Command, args []string) error {
 }
 
 func init() {
-	requireOrganization(containerGroupListCmd)
-	requireProject(containerGroupListCmd)
-	containerGroupCmd.AddCommand(containerGroupListCmd)
+	requireOrganization(workloadList)
+	requireProject(workloadList)
+	workloadCmd.AddCommand(workloadList)
 }

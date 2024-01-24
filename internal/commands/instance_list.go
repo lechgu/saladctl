@@ -23,7 +23,7 @@ func ListInstances(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	instances, err := ctl.ListInstances(organizationName, projectName, containerGroupName)
+	instances, err := ctl.ListInstances(organizationName, projectName, workloadName)
 	if err != nil {
 		return err
 	}
@@ -41,6 +41,6 @@ func ListInstances(cmd *cobra.Command, args []string) error {
 func init() {
 	requireOrganization(instanceListCmd)
 	requireProject(instanceListCmd)
-	requireContainerGroup(instanceListCmd)
+	requireWorkload(instanceListCmd)
 	instanceCmd.AddCommand(instanceListCmd)
 }

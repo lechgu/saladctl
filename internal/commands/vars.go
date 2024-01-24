@@ -3,13 +3,11 @@ package commands
 import "github.com/spf13/cobra"
 
 var (
-	organizationName   string
-	projectName        string
-	containerGroupName string
-	queueName          string
-	jobID              string
-	path               string
-	project            int
+	organizationName string
+	projectName      string
+	workloadName     string
+	queueName        string
+	jobID            string
 )
 
 func requireOrganization(cmd *cobra.Command) {
@@ -22,9 +20,9 @@ func requireProject(cmd *cobra.Command) {
 	_ = cmd.MarkFlagRequired("project")
 }
 
-func requireContainerGroup(cmd *cobra.Command) {
-	cmd.Flags().StringVarP(&containerGroupName, "container-group", "c", "", "Container group name")
-	_ = cmd.MarkFlagRequired("container-group")
+func requireWorkload(cmd *cobra.Command) {
+	cmd.Flags().StringVarP(&workloadName, "workload", "w", "", "Workload name")
+	_ = cmd.MarkFlagRequired("workload")
 }
 
 func requireQueue(cmd *cobra.Command) {

@@ -102,3 +102,19 @@ func GetMany[T any](session *Session, url string) ([]T, error) {
 	err = json.Unmarshal(payload, &coll)
 	return coll.Items, err
 }
+
+func DeleteOne(session *Session, url string) error {
+	req, err := http.NewRequest(http.MethodDelete, url, http.NoBody)
+	if err != nil {
+		return err
+	}
+	res, err := session.Client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusAccepted {
+		return errors.New(res.Status)
+	}
+	return nil
+}

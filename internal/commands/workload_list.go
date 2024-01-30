@@ -24,12 +24,12 @@ func listWorkloads(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	containerGroups, err := ctl.ListWorkloads(organizationName, projectName)
+	workloads, err := ctl.ListWorkloads(organizationName, projectName)
 	if err != nil {
 		return err
 	}
 	tbl := table.New("Id", "Name", "Image", "Status", "Instances", "Created")
-	lo.ForEach(containerGroups, func(containerGroup dto.ContainerGroup, _ int) {
+	lo.ForEach(workloads, func(containerGroup dto.Workload, _ int) {
 		tbl.AddRow(containerGroup.ID,
 			containerGroup.Name,
 			containerGroup.Container.Image,

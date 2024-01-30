@@ -29,12 +29,17 @@ func NewController(di *do.Injector) (*Controller, error) {
 	}, nil
 }
 
-func (ctl *Controller) ListWorkloads(organization string, project string) ([]dto.ContainerGroup, error) {
+func (ctl *Controller) ListWorkloads(organization string, project string) ([]dto.Workload, error) {
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/containers", ctl.cfg.BaseURL, organization, project)
-	return sessions.GetMany[dto.ContainerGroup](ctl.session, url)
+	return sessions.GetMany[dto.Workload](ctl.session, url)
 }
 
-func (ctl *Controller) GetWorkload(organization string, project string, name string) (dto.ContainerGroup, error) {
+func (ctl *Controller) GetWorkload(organization string, project string, name string) (dto.Workload, error) {
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/containers/%s", ctl.cfg.BaseURL, organization, project, name)
-	return sessions.GetOne[dto.ContainerGroup](ctl.session, url)
+	return sessions.GetOne[dto.Workload](ctl.session, url)
+}
+
+func (ctl *Controller) DeleteWorkload(organization string, project string, name string) error {
+	url := fmt.Sprintf("%s/organizations/%s/projects/%s/containers/%s", ctl.cfg.BaseURL, organization, project, name)
+	return sessions.DeleteOne(ctl.session, url)
 }

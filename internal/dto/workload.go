@@ -21,7 +21,7 @@ type InstanceStatusCount struct {
 	RunningCount    int `json:"running_count" yaml:"running_count"`
 }
 
-type ContainerGroupState struct {
+type WorkloadState struct {
 	Status              string              `json:"status"`
 	Description         string              `json:"description" yaml:"description"`
 	StartTime           time.Time           `json:"start_time"`
@@ -29,27 +29,23 @@ type ContainerGroupState struct {
 	InstanceStatusCount InstanceStatusCount `json:"instance_status_count"`
 }
 
-type ContainerGroupQueueConnection struct {
+type WorkloadQueueConnection struct {
 	Path      string `json:"path" yaml:"path"`
 	Port      int    `json:"port" yaml:"port"`
 	QueueName string `json:"queue_name" yaml:"queue_name"`
 }
 
-type ContainerGroup struct {
-	ID              string                        `json:"id" yaml:"id"`
-	Name            string                        `json:"name" yaml:"name"`
-	DisplayName     string                        `json:"display_name" yaml:"display_name"`
-	AutostartPolicy bool                          `json:"autostart_policy" yaml:"autostart_policy"`
-	Replicas        int                           `json:"replicas" yaml:"replicas"`
-	RestartPolicy   string                        `json:"restart_policy" yaml:"restart_policy"`
-	Container       Container                     `json:"container" yaml:"container"`
-	CurrentState    ContainerGroupState           `json:"current_state" yaml:"current_state"`
-	QueueConnection ContainerGroupQueueConnection `json:"queue_connection" yaml:"queue_connection"`
-	CreateTime      time.Time                     `json:"create_time" yaml:"create_time"`
-	UpdateTime      time.Time                     `json:"update_time" yaml:"update_time"`
-	Version         int                           `json:"version" yaml:"version"`
-}
-
-type ContainerGroupList struct {
-	Items []ContainerGroup `json:"items"`
+type Workload struct {
+	ID              string                  `json:"id" yaml:"id"`
+	Name            string                  `json:"name" yaml:"name"`
+	DisplayName     string                  `json:"display_name" yaml:"display_name"`
+	AutostartPolicy bool                    `json:"autostart_policy" yaml:"autostart_policy"`
+	Replicas        int                     `json:"replicas" yaml:"replicas"`
+	RestartPolicy   string                  `json:"restart_policy" yaml:"restart_policy"`
+	Container       Container               `json:"container" yaml:"container"`
+	CurrentState    WorkloadState           `json:"current_state" yaml:"current_state"`
+	QueueConnection WorkloadQueueConnection `json:"queue_connection" yaml:"queue_connection"`
+	CreateTime      time.Time               `json:"create_time" yaml:"create_time"`
+	UpdateTime      time.Time               `json:"update_time" yaml:"update_time"`
+	Version         int                     `json:"version" yaml:"version"`
 }

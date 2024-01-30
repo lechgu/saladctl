@@ -44,6 +44,11 @@ func (ctl *Controller) GetQueue(organization string, project string, name string
 	return sessions.GetOne[dto.Queue](ctl.session, url)
 }
 
+func (ctl *Controller) DeleteQueue(organization string, project string, name string) error {
+	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues/%s", ctl.cfg.BaseURL, organization, project, name)
+	return sessions.DeleteOne(ctl.session, url)
+}
+
 func (ctl *Controller) CreateQueue(organization string, project string, req dto.CreateQueueRequest) (dto.Queue, error) {
 	var queue dto.Queue
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues", ctl.cfg.BaseURL, organization, project)

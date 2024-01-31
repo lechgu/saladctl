@@ -19,7 +19,7 @@ var jobCreateCmd = &cobra.Command{
 }
 
 func createJob(cmd *cobra.Command, args []string) error {
-	payload, err := io.ReadAll(os.Stdin)
+	payload, err := getPayload()
 	if err != nil {
 		return err
 	}
@@ -27,6 +27,7 @@ func createJob(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+
 	job, err := ctl.PostJob(organizationName, projectName, queueName, payload)
 	if err != nil {
 		return err
@@ -43,5 +44,16 @@ func init() {
 	requireOrganization(jobCreateCmd)
 	requireProject(jobCreateCmd)
 	requireQueue(jobCreateCmd)
+	requirePayload(jobCreateCmd)
 	jobCmd.AddCommand(jobCreateCmd)
+}
+
+func getPayload() ([]byte, error) {
+	payload := []byte{}
+	f, err := os.Open(payloadFile)
+	if err != nil {
+		return payload, err
+	}
+	defer f.Close()
+	return io.ReadAll(f)
 }

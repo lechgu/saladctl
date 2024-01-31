@@ -8,6 +8,7 @@ var (
 	workloadName     string
 	queueName        string
 	jobID            string
+	payloadFile      string
 )
 
 func requireOrganization(cmd *cobra.Command) {
@@ -33,4 +34,9 @@ func requireQueue(cmd *cobra.Command) {
 func requireJob(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&jobID, "job", "j", "", "Job id")
 	_ = cmd.MarkFlagRequired("job")
+}
+
+func requirePayload(cmd *cobra.Command) {
+	cmd.Flags().StringVarP(&payloadFile, "payload", "f", "", "File containing the job payload")
+	_ = cmd.MarkFlagRequired("payload")
 }

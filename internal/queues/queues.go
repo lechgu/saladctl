@@ -1,15 +1,10 @@
 package queues
 
 import (
-	"bytes"
-	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
 	"lechgu/saladctl/internal/config"
 	"lechgu/saladctl/internal/dto"
 	"lechgu/saladctl/internal/sessions"
-	"net/http"
 
 	"github.com/samber/do"
 )
@@ -50,24 +45,6 @@ func (ctl *Controller) DeleteQueue(organization string, project string, name str
 }
 
 func (ctl *Controller) CreateQueue(organization string, project string, req dto.CreateQueueRequest) (dto.Queue, error) {
-	var queue dto.Queue
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s/queues", ctl.cfg.BaseURL, organization, project)
-	payload, err := json.Marshal(req)
-	if err != nil {
-		return queue, err
-	}
-	res, err := ctl.session.Client.Post(url, "application/json", bytes.NewReader(payload))
-	if err != nil {
-		return queue, err
-	}
-	defer res.Body.Close()
-	if res.StatusCode != http.StatusCreated {
-		return queue, errors.New(res.Status)
-	}
-	payload, err = io.ReadAll(res.Body)
-	if err != nil {
-		return queue, err
-	}
-	err = json.Unmarshal(payload, &queue)
-	return queue, err
+	return sessions.CreateOne[dto.Queue, dto.CreateQueueRequest](ctl.session, url, req)
 }

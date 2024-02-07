@@ -38,3 +38,13 @@ func (ctl *Controller) GetProject(organization string, name string) (dto.Project
 	url := fmt.Sprintf("%s/organizations/%s/projects/%s", ctl.cfg.BaseURL, organization, name)
 	return sessions.GetOne[dto.Project](ctl.session, url)
 }
+
+func (ctl *Controller) CreateProject(organization string, req dto.CreateProjectRequest) (dto.Project, error) {
+	url := fmt.Sprintf("%s/organizations/%s/projects", ctl.cfg.BaseURL, organization)
+	return sessions.CreateOne[dto.Project, dto.CreateProjectRequest](ctl.session, url, req)
+}
+
+func (ctl *Controller) DeleteProject(organization string, project string) error {
+	url := fmt.Sprintf("%s/organizations/%s/projects/%s", ctl.cfg.BaseURL, organization, project)
+	return sessions.DeleteOne(ctl.session, url)
+}

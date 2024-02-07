@@ -80,6 +80,28 @@ func GetOne[T any](session *Session, url string) (T, error) {
 	return instance, err
 }
 
+func CreateOne[T any, R any](session *Session, url string, req R) (T, error) {
+	var instance T
+	payload, err := json.Marshal(req)
+	if err != nil {
+		return instance, err
+	}
+	res, err := session.Client.Post(url, "application/json", bytes.NewReader(payload))
+	if err != nil {
+		return instance, err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusCreated {
+		return instance, errors.New(res.Status)
+	}
+	payload, err = io.ReadAll(res.Body)
+	if err != nil {
+		return instance, err
+	}
+	err = json.Unmarshal(payload, &instance)
+	return instance, err
+}
+
 type Collection[T any] struct {
 	Items []T `json:"items"`
 }

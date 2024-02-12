@@ -7,6 +7,7 @@ var (
 	projectName      string
 	workloadName     string
 	queueName        string
+	image            string
 	jobID            string
 	payloadFile      string
 )
@@ -39,4 +40,9 @@ func requireJob(cmd *cobra.Command) {
 func requirePayload(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&payloadFile, "payload", "f", "", "File containing the job payload")
 	_ = cmd.MarkFlagRequired("payload")
+}
+
+func requireImage(cmd *cobra.Command) {
+	cmd.Flags().StringVarP(&image, "image", "i", "", "Image name")
+	_ = cmd.MarkFlagRequired("image")
 }

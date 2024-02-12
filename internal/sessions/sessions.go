@@ -135,7 +135,7 @@ func DeleteOne(session *Session, url string) error {
 		return err
 	}
 	defer res.Body.Close()
-	if res.StatusCode != http.StatusAccepted {
+	if res.StatusCode != http.StatusAccepted && res.StatusCode != http.StatusOK {
 		return errors.New(res.Status)
 	}
 	return nil

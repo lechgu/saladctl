@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -11,12 +13,14 @@ var workloadCreate = &cobra.Command{
 }
 
 func createWorkload(cmd *cobra.Command, args []string) error {
-	_ = cmd.Help()
+	fmt.Println("creating workflow...")
 	return nil
 }
 
 func init() {
 	requireOrganization(workloadCreate)
 	requireProject(workloadCreate)
+	requireWorkload(workloadCreate)
+	requireImage(workloadCreate)
 	workloadCmd.AddCommand(workloadCreate)
 }
